@@ -62,8 +62,6 @@ def compute_auction_rewards(auction_id, environment):
             "participation": participating_non_winning_solvers,
         }
     )
-    print("Processed " + environment + " auction id " + str(auction_id))
-
 
 def compute_payouts(
     prod_start_auction, prod_end_auction, barn_start_auction, barn_end_auction
@@ -150,5 +148,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    # sleep time can be set here in seconds
     main()
