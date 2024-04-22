@@ -4,6 +4,6 @@ select
 from
     settlement_scores
 where
-    block_deadline > {{start_block}} 
+    block_deadline >= {{start_block}} 
         and
     block_deadline <= {{end_block}}

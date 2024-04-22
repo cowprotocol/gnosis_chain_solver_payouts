@@ -21,6 +21,4 @@ in order to get the first block after April 9th, 2024, 00:00 UTC and the last bl
 7500 xDAI have been allocated per week for solver rewards, with the following distribution:
 - 20% for the price estimation competition; this corresponds that 1,500 XDAI per week
 - 30% for performance rewars for the solver competition; this corresponds to 2,250 XDAI per week. To compute these, we use the second-price auction mechanism described in CIP-38, with adjusted upper and lower caps.
-- 50% for consistency for the solver competition; this corresponds to 3,750 xDAI per week. Moreover, the best 3 solutions in each auction are rewarded 20% more than the rest. What this means is that for each auction, all valid solutions except for the best 3 receive 1 participation token, while the best three receive 1.2 participation tokens each. We then compute the total number of participation tokens given out, and we distribute the 3,750 xDAI proportional to the number of participation tokens each solver has received.
-
-Price estimation 
+- 50% for consistency for the solver competition; this corresponds to 3,750 xDAI per week. Moreover, the best 3 solutions in each auction are rewarded 20% more than the rest. What this means is that for each auction, all valid solutions except for the best 3 receive 1 participation token each, while the best three receive 1.2 participation tokens each. We then compute the total number of participation tokens given out, and we distribute the 3,750 xDAI proportional to the number of participation tokens each solver has received.
