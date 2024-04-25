@@ -49,7 +49,7 @@ def main() -> None:
         + ".\n"
     )
 
-    FINAL_CONSISTENCY_REWARDS_BUDGET = CONSISTENCY_REWARDS_BUDGET
+    final_consistency_rewards_budget = CONSISTENCY_REWARDS_BUDGET
     # computing solver performance rewards
     performance_rewards_per_solver = {}
     performance_spend = 0
@@ -68,7 +68,7 @@ def main() -> None:
                 / performance_spend
             )
         else:
-            FINAL_CONSISTENCY_REWARDS_BUDGET += (-1) * performance_rewards_per_solver[
+            final_consistency_rewards_budget += (-1) * performance_rewards_per_solver[
                 solver
             ]
 
@@ -117,7 +117,7 @@ def main() -> None:
     for solver in participation_per_solver:
         participation_per_solver[solver] = (
             participation_per_solver[solver]
-            * FINAL_CONSISTENCY_REWARDS_BUDGET
+            * final_consistency_rewards_budget
             / total_participation_tokens
         )
 
