@@ -13,9 +13,19 @@ The rewards mechanism follows CIP-38, with the following caps being currently ch
 
 ### Usage
 
-The script requires access to the orderbook db. One needs to execute the following:
+The script requires access to the orderbook db. One first needs to use the virtual environment:
 
-`python3.11 main_script.py 2024 4 9`
+```
+python3.11 -m venv venv
+. venv/bin/activate
+pip install -r requirements.txt
+```
+
+In order to execute the script for the week starting on, e.g., April 9th, 2024, one needs to execute
+
+```
+python3.11 main_script.py 2024 4 9
+```
 
 and a csv file in the `/out` folder is generated with the transfers.
 
