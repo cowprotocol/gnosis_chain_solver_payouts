@@ -9,7 +9,7 @@ This repository contains a script that uses the Cow Protocol API as well as the 
 - 30% for performance rewars for the solver competition; this corresponds to 2,250 XDAI per week. To compute these, we use the second-price auction mechanism described in CIP-38, with adjusted upper and lower caps.
 - 50% for consistency for the solver competition; this corresponds to 3,750 xDAI per week. Moreover, the best 3 solutions in each auction are rewarded 20% more than the rest. What this means is that for each auction, all valid solutions except for the best 3 receive 1 participation token each, while the best three receive 1.2 participation tokens each. We then compute the total number of participation tokens given out, and we distribute the 3,750 xDAI proportional to the number of participation tokens each solver has received.
 
-The rewards mechanism follows CIP-38, with the following caps being currently chosen: 25 xDAI as an upper cap for performance and -5 xDAI as a lower cap for penalties. Rewards for each class (performance, consistency, quoting) are then rescaled to match the budget.
+The rewards mechanism follows CIP-38, with the following caps being currently chosen: 30 xDAI as an upper cap for performance and -5 xDAI as a lower cap for penalties. Rewards for each class (performance, consistency, quoting) are then rescaled to match the budget.
 
 ### Usage
 

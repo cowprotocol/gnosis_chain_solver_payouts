@@ -27,7 +27,7 @@ def get_block_range(year, month, day):
         print(e)
         return -1, -1
 
-    end_timestamp = start_timestamp + 7 * 24 * 60 * 60 
+    end_timestamp = start_timestamp + 7 * 24 * 60 * 60
     url = (
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
@@ -48,7 +48,6 @@ def get_block_range(year, month, day):
         return -1, -1
 
     return start_block, end_block
-
 
 
 def fetch_hashes(start_block, end_block) -> list[str]:

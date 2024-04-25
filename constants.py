@@ -80,5 +80,5 @@ SOLVER_ADDRESSES = {
     "0x0a360134553feED49FE5eb273074d80B6e45941F": [
         "prod-Barter",
         "0x0cd67AB9Fb2102e0759345273D0297306BCB539E",
-    ],  
+    ],
 }

@@ -68,7 +68,9 @@ def main() -> None:
                 / performance_spend
             )
         else:
-            FINAL_CONSISTENCY_REWARDS_BUDGET += (-1) * performance_rewards_per_solver[solver]
+            FINAL_CONSISTENCY_REWARDS_BUDGET += (-1) * performance_rewards_per_solver[
+                solver
+            ]
 
     # computing quote rewards
     quote_rewards_per_solver = {}
