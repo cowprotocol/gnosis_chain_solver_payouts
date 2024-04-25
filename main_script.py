@@ -175,7 +175,7 @@ def main() -> None:
             + ", "
             + str(round(final_rewards_per_solver[solver][2] / 10**18, 3))
             + ", "
-            + str(round(final_rewards_per_solver[solver][0] / 10**18, 3))
+            + str(round(final_rewards_per_solver[solver][3] / 10**18, 3))
             + "]."
         )
     print("\nTotal xDAI needed for the payouts: " + str(sanity_check))
