@@ -4,7 +4,7 @@ from constants import (
     PERFORMANCE_REWARDS_BUDGET,
     CONSISTENCY_REWARDS_BUDGET,
     QUOTE_REWARDS_BUDGET,
-    SOLVER_ADDRESSES
+    SOLVER_ADDRESSES,
 )
 from gnosis_scan_api import get_block_range
 from execute_sql_queries import (
@@ -120,49 +120,82 @@ def main() -> None:
     ovedrafts = {}
     final_rewards_per_solver = {}
     for solver in performance_rewards_per_solver:
-        final_rewards_per_solver[solver] = performance_rewards_per_solver[solver]
+        final_rewards_per_solver[solver] = [
+            performance_rewards_per_solver[solver],
+            0,
+            0,
+            performance_rewards_per_solver[solver],
+        ]
     for solver in quote_rewards_per_solver:
         if solver in final_rewards_per_solver:
-            final_rewards_per_solver[solver] += quote_rewards_per_solver[solver]
+            final_rewards_per_solver[solver][1] = quote_rewards_per_solver[solver]
+            final_rewards_per_solver[solver][3] += quote_rewards_per_solver[solver]
         else:
-            final_rewards_per_solver[solver] = quote_rewards_per_solver[solver]
+            final_rewards_per_solver[solver] = [
+                0,
+                quote_rewards_per_solver[solver],
+                0,
+                quote_rewards_per_solver[solver],
+            ]
     for solver in participation_per_solver:
         if solver in final_rewards_per_solver:
-            final_rewards_per_solver[solver] += participation_per_solver[solver]
+            final_rewards_per_solver[solver][2] = participation_per_solver[solver]
+            final_rewards_per_solver[solver][3] += participation_per_solver[solver]
         else:
-            final_rewards_per_solver[solver] = participation_per_solver[solver]      
-        if final_rewards_per_solver[solver] < 0:
-            ovedrafts[solver] = final_rewards_per_solver[solver]
+            final_rewards_per_solver[solver] = [
+                0,
+                0,
+                participation_per_solver[solver],
+                participation_per_solver[solver],
+            ]
+        if final_rewards_per_solver[solver][3] < 0:
+            ovedrafts[solver] = final_rewards_per_solver[solver] / 10**18
             final_rewards_per_solver.pop(solver)
 
-    print("Summary of results:\n")
+    print("Summary of results (performance, quoting, consistency, total):\n")
 
     sanity_check = 0
     processed_solver_addresses = {}
     for s in SOLVER_ADDRESSES:
         solver = s.lower()
         processed_solver_addresses[solver] = SOLVER_ADDRESSES[s]
-        processed_solver_addresses[solver][1] = processed_solver_addresses[solver][1].lower()
+        processed_solver_addresses[solver][1] = processed_solver_addresses[solver][
+            1
+        ].lower()
     for solver in final_rewards_per_solver:
         name = processed_solver_addresses[solver][0]
-        reward = final_rewards_per_solver[solver] / 10**18
+        reward = final_rewards_per_solver[solver][3] / 10**18
         sanity_check += reward
-        print(name + ":\t" + str(reward))
+        print(
+            name
+            + ":\t["
+            + str(round(final_rewards_per_solver[solver][0] / 10**18, 3))
+            + ", "
+            + str(round(final_rewards_per_solver[solver][1] / 10**18, 3))
+            + ", "
+            + str(round(final_rewards_per_solver[solver][2] / 10**18, 3))
+            + ", "
+            + str(round(final_rewards_per_solver[solver][0] / 10**18, 3))
+            + "]."
+        )
     print("\nTotal xDAI needed for the payouts: " + str(sanity_check))
 
     # generate csv with transfers
-    with open(f'./out/transfers-start-{year}-{month}-{day}.csv', "w", newline='') as csvfile:
-        csvwriter = csv.writer(csvfile, delimiter=',')
-        csvwriter.writerow(['token_type','token_address', 'receiver','amount'])
+    with open(
+        f"./out/transfers-start-{year}-{month}-{day}.csv", "w", newline=""
+    ) as csvfile:
+        csvwriter = csv.writer(csvfile, delimiter=",")
+        csvwriter.writerow(["token_type", "token_address", "receiver", "amount"])
         for solver in final_rewards_per_solver:
             target = processed_solver_addresses[solver][1]
-            reward = final_rewards_per_solver[solver] / 10**18
-            csvwriter.writerow(['native', '', target, reward])
+            reward = final_rewards_per_solver[solver][3] / 10**18
+            csvwriter.writerow(["native", "", target, reward])
 
     if ovedrafts:
         print("Ovedrafts:")
         for solver in ovedrafts:
-            print(solver + "owes us:\t" + str(ovedrafts[solver]))
+            print(solver + " owes us:\t" + str(ovedrafts[solver]))
+
 
 if __name__ == "__main__":
     main()

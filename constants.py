@@ -3,7 +3,7 @@ All Constants that are used throughout the project
 """
 
 # upper cap
-UPPER_PERFORMANCE_REWARD_CAP = 25000000000000000000
+UPPER_PERFORMANCE_REWARD_CAP = 30000000000000000000
 
 # lower cap
 LOWER_PERFORMANCE_REWARD_CAP = 5000000000000000000
@@ -27,9 +27,6 @@ header = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
     "(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
 }
-
-BARN_DB_URL = ""
-PROD_DB_URL = ""
 
 GNOSIS_SAFE = "0x6C642caFCbd9d8383250bb25F67aE409147f78b2"
 

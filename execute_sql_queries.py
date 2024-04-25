@@ -1,17 +1,19 @@
+import os
 import pandas as pd
 from pandas import DataFrame
 from sqlalchemy import create_engine
 from sqlalchemy.engine import Engine
 from constants import (
-    PROD_DB_URL,
-    BARN_DB_URL,
     UPPER_PERFORMANCE_REWARD_CAP,
     LOWER_PERFORMANCE_REWARD_CAP,
 )
-
+from dotenv import load_dotenv
 
 def get_auction_range(start_block_str, end_block_str):
 
+    load_dotenv()
+    BARN_DB_URL = os.environ["BARN_DB_URL"]
+    PROD_DB_URL = os.environ["PROD_DB_URL"]
     prod_connection = create_engine(f"postgresql+psycopg2://{PROD_DB_URL}")
     barn_connection = create_engine(f"postgresql+psycopg2://{BARN_DB_URL}")
 
@@ -39,7 +41,10 @@ def get_auction_range(start_block_str, end_block_str):
 
 
 def compute_quote_rewards(start_block_str, end_block_str):
-
+    
+    load_dotenv()
+    BARN_DB_URL = os.environ["BARN_DB_URL"]
+    PROD_DB_URL = os.environ["PROD_DB_URL"]
     prod_connection = create_engine(f"postgresql+psycopg2://{PROD_DB_URL}")
     barn_connection = create_engine(f"postgresql+psycopg2://{BARN_DB_URL}")
 
@@ -60,6 +65,9 @@ def compute_quote_rewards(start_block_str, end_block_str):
 
 def compute_solver_rewards(start_block_str, end_block_str):
 
+    load_dotenv()
+    BARN_DB_URL = os.environ["BARN_DB_URL"]
+    PROD_DB_URL = os.environ["PROD_DB_URL"]
     prod_connection = create_engine(f"postgresql+psycopg2://{PROD_DB_URL}")
     barn_connection = create_engine(f"postgresql+psycopg2://{BARN_DB_URL}")
 
@@ -82,6 +90,10 @@ def compute_solver_rewards(start_block_str, end_block_str):
 
 
 def execute_participation_rewards_helper(start_block_str, end_block_str):
+
+    load_dotenv()
+    BARN_DB_URL = os.environ["BARN_DB_URL"]
+    PROD_DB_URL = os.environ["PROD_DB_URL"]
     prod_connection = create_engine(f"postgresql+psycopg2://{PROD_DB_URL}")
     barn_connection = create_engine(f"postgresql+psycopg2://{BARN_DB_URL}")
     query_file = (
