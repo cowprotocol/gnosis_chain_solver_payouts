@@ -74,11 +74,11 @@ SOLVER_ADDRESSES = {
         "0xf511cAa471f9cB1f60d6BE2CD2a3B19ca9f84679",
     ],
     "0xC4dd6355Fbc6Eb108FD1C100389789C5B1A9A980": [
-        "barn-CopiumCapital",
+        "barn-Barter",
         "0x0cd67AB9Fb2102e0759345273D0297306BCB539E",
     ],
     "0x0a360134553feED49FE5eb273074d80B6e45941F": [
-        "prod-CopiumCapital",
+        "prod-Barter",
         "0x0cd67AB9Fb2102e0759345273D0297306BCB539E",
-    ],
+    ],  
 }
