@@ -17,7 +17,6 @@ def get_block_range(year, month, day):
     try:
         response = requests.get(
             url,
-            headers=header,
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
@@ -37,7 +36,6 @@ def get_block_range(year, month, day):
     try:
         response = requests.get(
             url,
-            headers=header,
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
@@ -65,7 +63,6 @@ def fetch_hashes(start_block, end_block) -> list[str]:
     try:
         response = requests.get(
             url,
-            headers=header,
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
