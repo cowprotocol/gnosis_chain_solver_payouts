@@ -23,11 +23,6 @@ REQUEST_TIMEOUT = 5
 SUCCESS_CODE = 200
 FAIL_CODE = 404
 
-header = {
-    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 "
-    "(KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-}
-
 GNOSIS_SAFE = "0x6C642caFCbd9d8383250bb25F67aE409147f78b2"
 
 SOLVER_ADDRESSES = {
