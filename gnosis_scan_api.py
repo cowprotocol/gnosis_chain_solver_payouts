@@ -2,7 +2,7 @@ import requests
 import json
 import datetime
 import time
-from constants import header, REQUEST_TIMEOUT, SUCCESS_CODE
+from constants import REQUEST_TIMEOUT, SUCCESS_CODE
 
 
 def get_block_range(year, month, day):
@@ -21,10 +21,14 @@ def get_block_range(year, month, day):
         )
         if response.status_code == SUCCESS_CODE:
             data = json.loads(response.text)
-            start_block = int(data["result"])
+            if data["status"] == '1':
+                start_block = int(data["result"])
+            else:
+                print("Start timestamp. " + data["result"])
+                exit()
     except Exception as e:
-        print(e)
-        return -1, -1
+        print(f"Fetching block range failed with error: {e}")
+        raise e
 
     end_timestamp = start_timestamp + 7 * 24 * 60 * 60
     url = (
@@ -40,10 +44,14 @@ def get_block_range(year, month, day):
         )
         if response.status_code == SUCCESS_CODE:
             data = json.loads(response.text)
-            end_block = int(data["result"])
+            if data["status"] == '1':
+                end_block = int(data["result"])
+            else:
+                print("End timestamp. " + data["result"])
+                exit()
     except Exception as e:
-        print(e)
-        return -1, -1
+        print(f"Fetching block range failed with error: {e}")
+        raise e
 
     return start_block, end_block
 
