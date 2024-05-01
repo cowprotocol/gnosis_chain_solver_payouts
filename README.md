@@ -29,3 +29,9 @@ python3.11 main_script.py 2024 4 9
 
 and a csv file in the `/out` folder is generated with the transfers.
 
+There is also an optional argument that can be passed, which removes the transfers (not the accounting) of the rewards of the Gnosis solvers. E.g., usage
+
+```
+python3.11 main_script.py 2024 4 9 ignore_gnosis_transfers
+```
+

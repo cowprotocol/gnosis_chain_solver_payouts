@@ -21,7 +21,7 @@ def get_block_range(year, month, day):
         )
         if response.status_code == SUCCESS_CODE:
             data = json.loads(response.text)
-            if data["status"] == '1':
+            if data["status"] == "1":
                 start_block = int(data["result"])
             else:
                 print("Start timestamp. " + data["result"])
@@ -44,7 +44,7 @@ def get_block_range(year, month, day):
         )
         if response.status_code == SUCCESS_CODE:
             data = json.loads(response.text)
-            if data["status"] == '1':
+            if data["status"] == "1":
                 end_block = int(data["result"])
             else:
                 print("End timestamp. " + data["result"])
@@ -75,7 +75,6 @@ def fetch_hashes(start_block, end_block) -> list[str]:
         )
         if response.status_code == SUCCESS_CODE:
             data = json.loads(response.text)
-            i = 0
             for x in data["result"]:
                 res.append(x["hash"])
     except Exception as e:

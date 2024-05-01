@@ -5,6 +5,7 @@ from constants import (
     CONSISTENCY_REWARDS_BUDGET,
     QUOTE_REWARDS_BUDGET,
     SOLVER_ADDRESSES,
+    GNOSIS_SAFE,
 )
 from gnosis_scan_api import get_block_range
 from execute_sql_queries import (
@@ -16,9 +17,20 @@ from execute_sql_queries import (
 
 
 def main() -> None:
+    # parsing command-line arguments
+    if len(sys.argv) < 4:
+        print("Wrong usage. Need three entries: YEAR MONTH DAY")
+        exit()
     year = int(sys.argv[1])
     month = int(sys.argv[2])
     day = int(sys.argv[3])
+    ignore_gnosis_transfers = False
+    if len(sys.argv) == 5:
+        if sys.argv[4] == "ignore_gnosis_transfers":
+            ignore_gnosis_transfers = True
+            print("Gnosis Solvers transfers will be removed from the final .csv.")
+
+    # preprocessing
     start_block, end_block = get_block_range(year, month, day)
     print(
         "\nAccounting period from block "
@@ -28,7 +40,7 @@ def main() -> None:
         + "."
     )
 
-    ## Compute prod and barn auction range
+    # compute prod and barn auction range
     (
         prod_start_auction_str,
         prod_end_auction_str,
@@ -193,6 +205,8 @@ def main() -> None:
         csvwriter.writerow(["token_type", "token_address", "receiver", "amount"])
         for solver in final_rewards_per_solver:
             target = processed_solver_addresses[solver][1]
+            if target == GNOSIS_SAFE.lower() and ignore_gnosis_transfers:
+                continue
             reward = final_rewards_per_solver[solver][3] / 10**18
             csvwriter.writerow(["native", "", target, reward])
 
