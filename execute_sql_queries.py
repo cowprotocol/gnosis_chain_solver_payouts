@@ -109,6 +109,7 @@ def execute_participation_rewards_helper(start_block_str, end_block_str):
     )
     prod_res = pd.read_sql(query_file, prod_connection)
     barn_res = pd.read_sql(query_file, barn_connection)
+
     prod_auction_list = []
     barn_auction_list = []
     for index, row in prod_res.iterrows():
@@ -129,7 +130,9 @@ def execute_participation_rewards_helper(start_block_str, end_block_str):
         .replace("{{auction_list}}", barn_auction_list_str)
     )
     results = []
-    results.append(pd.read_sql(prod_query_file, prod_connection))
-    results.append(pd.read_sql(barn_query_file, barn_connection))
+    if len(prod_auction_list) > 0:
+        results.append(pd.read_sql(prod_query_file, prod_connection))
+    if len(barn_auction_list) > 0:
+        results.append(pd.read_sql(barn_query_file, barn_connection))
 
     return pd.concat(results)
