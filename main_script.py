@@ -205,6 +205,8 @@ def main() -> None:
         csvwriter = csv.writer(csvfile, delimiter=",")
         csvwriter.writerow(["token_type", "token_address", "receiver", "amount"])
         for solver in final_rewards_per_solver:
+            if solver in ovedrafts:
+                continue
             target = processed_solver_addresses[solver][1]
             if target == GNOSIS_SAFE.lower() and ignore_gnosis_transfers:
                 continue

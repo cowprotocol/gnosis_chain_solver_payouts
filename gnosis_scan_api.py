@@ -30,7 +30,7 @@ def get_block_range(year, month, day):
         print(f"Fetching block range failed with error: {e}")
         raise e
 
-    end_timestamp = start_timestamp + 7 * 24 * 60 * 60
+    end_timestamp = start_timestamp + 7 * 24 * 60 * 60 - 1
     url = (
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
