@@ -172,7 +172,7 @@ def main() -> None:
 
     print("Summary of results (performance, quoting, consistency, total):\n")
 
-    sanity_check = 0
+    total_xdai_needed = 0
     processed_solver_addresses = {}
     for s in SOLVER_ADDRESSES:
         solver = s.lower()
@@ -183,7 +183,7 @@ def main() -> None:
     for solver in final_rewards_per_solver:
         name = processed_solver_addresses[solver][0]
         reward = final_rewards_per_solver[solver][3] / 10**18
-        sanity_check += reward
+        total_xdai_needed += reward
         print(
             name
             + ":\t["
@@ -196,7 +196,7 @@ def main() -> None:
             + str(round(final_rewards_per_solver[solver][3] / 10**18, 3))
             + "]."
         )
-    print("\nTotal xDAI needed for the payouts: " + str(sanity_check))
+    print("\nTotal xDAI needed for the payouts: " + str(total_xdai_needed))
 
     # generate csv with transfers
     with open(
