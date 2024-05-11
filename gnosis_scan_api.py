@@ -1,13 +1,13 @@
 import requests
 import json
 import datetime
-import time
+import calendar
 from constants import REQUEST_TIMEOUT, SUCCESS_CODE
 
 
 def get_block_range(year, month, day):
-    date_time = datetime.datetime(year, month, day, 0, 0)
-    start_timestamp = int(time.mktime(date_time.timetuple())) + 3 * 60 * 60
+    date_time = datetime.datetime(year, month, day)
+    start_timestamp = int(calendar.timegm(date_time.timetuple()))
     url = (
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="

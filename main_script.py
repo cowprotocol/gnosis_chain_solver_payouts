@@ -35,7 +35,7 @@ def main() -> None:
     print(
         "\nAccounting period from block "
         + str(start_block)
-        + " until block "
+        + " to block "
         + str(end_block)
         + "."
     )
@@ -165,9 +165,10 @@ def main() -> None:
                 participation_per_solver[solver],
                 participation_per_solver[solver],
             ]
+
+    for solver in final_rewards_per_solver:
         if final_rewards_per_solver[solver][3] < 0:
-            ovedrafts[solver] = final_rewards_per_solver[solver] / 10**18
-            final_rewards_per_solver.pop(solver)
+            ovedrafts[solver] = round(final_rewards_per_solver[solver][3] / 10**18, 3)
 
     print("Summary of results (performance, quoting, consistency, total):\n")
 
@@ -211,9 +212,15 @@ def main() -> None:
             csvwriter.writerow(["native", "", target, reward])
 
     if ovedrafts:
-        print("Ovedrafts:")
+        print()
+        print("Ovedrafts summary.")
         for solver in ovedrafts:
-            print(solver + " owes us:\t" + str(ovedrafts[solver]))
+            print(
+                "Overdraft for "
+                + processed_solver_addresses[solver][0]
+                + ":\t"
+                + str(ovedrafts[solver])
+            )
 
 
 if __name__ == "__main__":
