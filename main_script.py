@@ -90,9 +90,8 @@ def main() -> None:
     quote_rewards = compute_quote_rewards(str(start_block), str(end_block))
     for index, row in quote_rewards.iterrows():
         number = int(row["num_quotes"])
-        if number > 0:
-            total_quotes += number
-            quote_rewards_per_solver[row["solver"]] = number
+        total_quotes += number
+        quote_rewards_per_solver[row["solver"]] = number
 
     for solver in quote_rewards_per_solver:
         quote_rewards_per_solver[solver] = (
