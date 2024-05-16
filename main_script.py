@@ -19,7 +19,7 @@ from execute_sql_queries import (
 def main() -> None:
     # parsing command-line arguments
     if len(sys.argv) < 4:
-        print("Wrong usage. Need three entries: YEAR MONTH DAY")
+        print("Wrong usage. Need at least three entries: YEAR MONTH DAY")
         exit()
     year = int(sys.argv[1])
     month = int(sys.argv[2])
