@@ -1,5 +1,4 @@
 import requests
-import json
 import datetime
 import calendar
 from constants import REQUEST_TIMEOUT, SUCCESS_CODE
@@ -20,7 +19,7 @@ def get_block_range(year, month, day):
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
-            data = json.loads(response.text)
+            data = response.json()
             if data["status"] == "1":
                 start_block = int(data["result"])
             else:
@@ -43,7 +42,7 @@ def get_block_range(year, month, day):
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
-            data = json.loads(response.text)
+            data = response.json()
             if data["status"] == "1":
                 end_block = int(data["result"])
             else:
@@ -74,7 +73,7 @@ def fetch_hashes(start_block, end_block) -> list[str]:
             timeout=REQUEST_TIMEOUT,
         )
         if response.status_code == SUCCESS_CODE:
-            data = json.loads(response.text)
+            data = response.json()
             for x in data["result"]:
                 res.append(x["hash"])
     except Exception as e:
