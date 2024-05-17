@@ -128,7 +128,12 @@ def main() -> None:
 
     # putting everything together
     ovedrafts = {}
-    final_rewards_per_solver = {solver: [0, 0, 0, 0] for solver in performance_rewards_per_solver | quote_rewards_per_solver | participation_per_solver}
+    final_rewards_per_solver = {
+        solver: [0, 0, 0, 0]
+        for solver in performance_rewards_per_solver
+        | quote_rewards_per_solver
+        | participation_per_solver
+    }
     for solver in performance_rewards_per_solver:
         final_rewards_per_solver[solver][0] = performance_rewards_per_solver[solver]
         final_rewards_per_solver[solver][3] += performance_rewards_per_solver[solver]
@@ -138,7 +143,6 @@ def main() -> None:
     for solver in participation_per_solver:
         final_rewards_per_solver[solver][2] = participation_per_solver[solver]
         final_rewards_per_solver[solver][3] += participation_per_solver[solver]
-
 
     for solver in final_rewards_per_solver:
         if final_rewards_per_solver[solver][3] < 0:
