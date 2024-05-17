@@ -107,7 +107,6 @@ def main() -> None:
     for index, row in participation_data.iterrows():
         ll = list(row["competition_info"])
         num_solutions = len(ll)
-        i = num_solutions - 1
         for i in range(num_solutions):
             if i >= num_solutions - 3:
                 token_delta = 1.2
