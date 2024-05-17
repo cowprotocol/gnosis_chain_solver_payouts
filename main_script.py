@@ -109,22 +109,17 @@ def main() -> None:
         ll = list(row["competition_info"])
         num_solutions = len(ll)
         i = num_solutions - 1
-        while i >= num_solutions - 3 and i >= 0:
+        for i in range(num_solutions):
+            if i >= num_solutions - 3:
+                token_delta = 1.2
+            else:
+                token_delta = 1.0
             solver = ll[i]["solverAddress"]
             if solver in participation_per_solver:
-                participation_per_solver[solver] += 1.2
+                participation_per_solver[solver] += token_delta
             else:
-                participation_per_solver[solver] = 1.2
-            i = i - 1
-            total_participation_tokens += 1.2
-        while i >= 0:
-            solver = ll[i]["solverAddress"]
-            if solver in participation_per_solver:
-                participation_per_solver[solver] += 1
-            else:
-                participation_per_solver[solver] = 1
-            i = i - 1
-            total_participation_tokens += 1
+                participation_per_solver[solver] = token_delta
+            total_participation_tokens += token_delta
 
     for solver in participation_per_solver:
         participation_per_solver[solver] = (
