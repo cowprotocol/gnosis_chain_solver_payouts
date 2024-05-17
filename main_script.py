@@ -128,36 +128,17 @@ def main() -> None:
 
     # putting everything together
     ovedrafts = {}
-    final_rewards_per_solver = {}
+    final_rewards_per_solver = {solver: [0, 0, 0, 0] for solver in performance_rewards_per_solver | quote_rewards_per_solver | participation_per_solver}
     for solver in performance_rewards_per_solver:
-        final_rewards_per_solver[solver] = [
-            performance_rewards_per_solver[solver],
-            0,
-            0,
-            performance_rewards_per_solver[solver],
-        ]
+        final_rewards_per_solver[solver][0] = performance_rewards_per_solver[solver]
+        final_rewards_per_solver[solver][3] += performance_rewards_per_solver[solver]
     for solver in quote_rewards_per_solver:
-        if solver in final_rewards_per_solver:
-            final_rewards_per_solver[solver][1] = quote_rewards_per_solver[solver]
-            final_rewards_per_solver[solver][3] += quote_rewards_per_solver[solver]
-        else:
-            final_rewards_per_solver[solver] = [
-                0,
-                quote_rewards_per_solver[solver],
-                0,
-                quote_rewards_per_solver[solver],
-            ]
+        final_rewards_per_solver[solver][1] = quote_rewards_per_solver[solver]
+        final_rewards_per_solver[solver][3] += quote_rewards_per_solver[solver]
     for solver in participation_per_solver:
-        if solver in final_rewards_per_solver:
-            final_rewards_per_solver[solver][2] = participation_per_solver[solver]
-            final_rewards_per_solver[solver][3] += participation_per_solver[solver]
-        else:
-            final_rewards_per_solver[solver] = [
-                0,
-                0,
-                participation_per_solver[solver],
-                participation_per_solver[solver],
-            ]
+        final_rewards_per_solver[solver][2] = participation_per_solver[solver]
+        final_rewards_per_solver[solver][3] += participation_per_solver[solver]
+
 
     for solver in final_rewards_per_solver:
         if final_rewards_per_solver[solver][3] < 0:
