@@ -73,4 +73,12 @@ SOLVER_ADDRESSES = {
         "prod-Barter",
         "0x0cd67AB9Fb2102e0759345273D0297306BCB539E",
     ],
+    "0x4398129426Cb1377E9E10395b8dfBDa153c7Fe7D": [
+        "barn-FractalSolver",
+        "0xd4676B4DE3a982A429a8DBE90D4A7e7cfB4769A5",
+    ],
+    "0x727EB77c6f84ef148403f641aA32d75b7f6902A7": [
+        "prod-FractalSolver",
+        "0xd4676B4DE3a982A429a8DBE90D4A7e7cfB4769A5",
+    ]
 }
