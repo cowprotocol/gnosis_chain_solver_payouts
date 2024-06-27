@@ -70,8 +70,8 @@ order_surplus AS (
         AND s.auction_id = oe.auction_id
         LEFT OUTER JOIN order_quotes oq -- contains quote amounts
         ON o.uid = oq.order_uid
-        LEFT OUTER JOIN app_data ad
-        on o.app_data = ad.contract_app_data 
+        LEFT OUTER JOIN app_data ad -- contains full app data
+        on o.app_data = ad.contract_app_data
     WHERE
         ss.block_deadline >= {{start_block}}
         AND ss.block_deadline <= {{end_block}}
@@ -292,11 +292,12 @@ order_protocol_fee_prices AS (
         opf.surplus,
         opf.protocol_fee,
         opf.protocol_fee_token,
-        opf.partner_fee_recipient,
         CASE
             WHEN opf.partner_fee_recipient IS NOT NULL THEN opf.protocol_fee_kind_second
             ELSE opf.protocol_fee_kind_first
         END AS protocol_fee_kind,
+        opf.partner_fee,
+        opf.partner_fee_recipient,
         CASE
             WHEN opf.sell_token != opf.protocol_fee_token THEN (opf.sell_amount - opf.observed_fee) / opf.buy_amount * opf.protocol_fee
             ELSE opf.protocol_fee
@@ -306,7 +307,7 @@ order_protocol_fee_prices AS (
         ap_protocol.price / pow(10, 18) as protocol_fee_token_native_price,
         ap_sell.price / pow(10, 18) as network_fee_token_native_price
     FROM
-        order_protocol_fee opf
+        order_protocol_fee as opf
         JOIN auction_prices ap_sell -- contains price: sell token
         ON opf.auction_id = ap_sell.auction_id
         AND opf.sell_token = ap_sell.token
@@ -321,7 +322,6 @@ batch_protocol_fees AS (
     SELECT
         solver,
         tx_hash,
-        -- sum(surplus * surplus_token_price) as surplus,
         sum(protocol_fee * protocol_fee_token_native_price) as protocol_fee,
         sum(network_fee_correction * network_fee_token_native_price) as network_fee_correction
     FROM
@@ -432,7 +432,7 @@ partner_fees_per_solver AS (
     SELECT
         solver,
         partner_fee_recipient,
-        sum(protocol_fee * protocol_fee_token_native_price) as protocol_fee_eth
+        sum(partner_fee * protocol_fee_token_native_price) as partner_fee
     FROM
         order_protocol_fee_prices
         WHERE partner_fee_recipient is not null
@@ -442,7 +442,7 @@ aggregate_partner_fees_per_solver AS (
     SELECT
         solver,
         array_agg(partner_fee_recipient) as partner_list,
-        array_agg(protocol_fee_eth) as partner_payments_in_eth
+        array_agg(partner_fee) as partner_fee
     FROM partner_fees_per_solver
         group by solver
 ),
@@ -454,7 +454,7 @@ aggregate_results as (
         coalesce(protocol_fee, 0) as protocol_fee_eth,
         coalesce(network_fee, 0) as network_fee_eth,
         partner_list,
-        partner_payments_in_eth
+        partner_fee as partner_fee_eth
     FROM
         participation_counts pc
         LEFT OUTER JOIN primary_rewards pr ON pr.solver = pc.solver
