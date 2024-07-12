@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
-from constants import (
+from src.constants import (
     UPPER_PERFORMANCE_REWARD_CAP,
     LOWER_PERFORMANCE_REWARD_CAP,
 )
@@ -29,7 +29,7 @@ def get_auction_range(start_block_str, end_block_str):
     prod_connection, barn_connection = create_db_connections()
 
     query_file = (
-        open("auction_range.sql", "r")
+        open("src/queries/auction_range.sql", "r")
         .read()
         .replace("{{start_block}}", start_block_str)
         .replace("{{end_block}}", end_block_str)
@@ -59,7 +59,7 @@ def compute_quote_rewards(start_block_str, end_block_str):
     prod_connection, barn_connection = create_db_connections()
 
     query_file = (
-        open("quote_rewards.sql", "r")
+        open("src/queries/quote_rewards.sql", "r")
         .read()
         .replace("{{start_block}}", start_block_str)
         .replace("{{end_block}}", end_block_str)
@@ -78,7 +78,7 @@ def compute_solver_rewards(start_block_str, end_block_str):
     prod_connection, barn_connection = create_db_connections()
 
     query_file = (
-        open("solver_rewards.sql", "r")
+        open("src/queries/solver_rewards.sql", "r")
         .read()
         .replace("{{start_block}}", start_block_str)
         .replace("{{end_block}}", end_block_str)
@@ -102,7 +102,7 @@ def execute_participation_rewards_helper(start_block_str, end_block_str):
     prod_connection, barn_connection = create_db_connections()
 
     query_file = (
-        open("successful_auction_ids.sql", "r")
+        open("src/queries/successful_auction_ids.sql", "r")
         .read()
         .replace("{{start_block}}", start_block_str)
         .replace("{{end_block}}", end_block_str)
@@ -120,12 +120,12 @@ def execute_participation_rewards_helper(start_block_str, end_block_str):
     prod_auction_list_str = str(prod_auction_list).replace("[", "(").replace("]", ")")
     barn_auction_list_str = str(barn_auction_list).replace("[", "(").replace("]", ")")
     prod_query_file = (
-        open("participation_rewards_aux.sql", "r")
+        open("src/queries/participation_rewards_aux.sql", "r")
         .read()
         .replace("{{auction_list}}", prod_auction_list_str)
     )
     barn_query_file = (
-        open("participation_rewards_aux.sql", "r")
+        open("src/queries/participation_rewards_aux.sql", "r")
         .read()
         .replace("{{auction_list}}", barn_auction_list_str)
     )
