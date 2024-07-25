@@ -1,14 +1,14 @@
 import sys
 import csv
-from constants import (
+from src.constants import (
     PERFORMANCE_REWARDS_BUDGET,
     CONSISTENCY_REWARDS_BUDGET,
     QUOTE_REWARDS_BUDGET,
     SOLVER_ADDRESSES,
     GNOSIS_SAFE,
 )
-from gnosis_scan_api import get_block_range
-from execute_sql_queries import (
+from src.gnosis_scan_api import get_block_range
+from src.execute_sql_queries import (
     get_auction_range,
     compute_solver_rewards,
     compute_quote_rewards,
