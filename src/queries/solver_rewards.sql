@@ -451,7 +451,7 @@ aggregate_results as (
     FROM
         participation_counts pc
         LEFT OUTER JOIN primary_rewards pr ON pr.solver = pc.solver
-        LEFT OUTER JOIN aggregate_partner_fees_per_solver aif on pr.solver = aif.solver 
+        LEFT OUTER JOIN aggregate_partner_fees_per_solver aif on pr.solver = aif.solver
 ) --
 select
     solver,
