@@ -340,23 +340,16 @@ reward_data AS (
         coalesce(os.solver, winner) as solver,
         block_number as settlement_block,
         block_deadline,
-        case
-            when block_number is not null
-            and block_number > block_deadline then 0
-            else coalesce(execution_cost, 0) -- if block_number is null, execution cost is 0
-        end as execution_cost,
-        case
-            when block_number is not null
-            and block_number > block_deadline then 0
-            else coalesce(surplus, 0) -- if block_number is null, surplus is 0
-        end as surplus,
-        case
-            when block_number is not null
-            and block_number > block_deadline then 0
-            else coalesce(fee, 0) -- if block_number is null, fee is 0
-        end as fee,
+        coalesce(execution_cost, 0) as execution_cost,
+        coalesce(surplus, 0) as surplus,
+        coalesce(fee, 0) as fee,
         -- scores
         winning_score,
+        case
+            when block_number is not null
+            and block_number <= block_deadline + 1 then winning_score -- this includes a grace period of one block for settling a batch
+            else 0
+        end as observed_score,
         reference_score,
         -- auction_participation
         participating_solvers,
@@ -386,12 +379,12 @@ reward_per_auction as (
         surplus,
         protocol_fee, -- the protocol fee
         fee - network_fee_correction as network_fee, -- the network fee
-        surplus + protocol_fee - reference_score as uncapped_payment,
+        observed_score - reference_score as uncapped_payment,
         -- Capped Reward = CLAMP_[-E, E + exec_cost](uncapped_reward_eth)
         LEAST(
             GREATEST(
                 - {{EPSILON_LOWER}},
-                surplus + protocol_fee - reference_score
+                observed_score - reference_score
             ),
             {{EPSILON_UPPER}}
         ) as capped_payment,
@@ -458,7 +451,7 @@ aggregate_results as (
     FROM
         participation_counts pc
         LEFT OUTER JOIN primary_rewards pr ON pr.solver = pc.solver
-        LEFT OUTER JOIN aggregate_partner_fees_per_solver aif on pr.solver = aif.solver 
+        LEFT OUTER JOIN aggregate_partner_fees_per_solver aif on pr.solver = aif.solver
 ) --
 select
     solver,
