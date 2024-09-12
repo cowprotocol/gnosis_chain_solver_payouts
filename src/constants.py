@@ -62,6 +62,10 @@ SOLVER_ADDRESSES = {
         "0xf511cAa471f9cB1f60d6BE2CD2a3B19ca9f84679",
     ],
     "0xb4694FE6590acd1281Dc34a966bbAE224559BaD4": [
+        "prod-CopiumCapital_old",
+        "0xf511cAa471f9cB1f60d6BE2CD2a3B19ca9f84679",
+    ],
+    "0xfaBBDf8a77005C00edBe0000bDC000644c024322": [
         "prod-CopiumCapital",
         "0xf511cAa471f9cB1f60d6BE2CD2a3B19ca9f84679",
     ],
@@ -80,5 +84,5 @@ SOLVER_ADDRESSES = {
     "0x727EB77c6f84ef148403f641aA32d75b7f6902A7": [
         "prod-FractalSolver",
         "0xd4676B4DE3a982A429a8DBE90D4A7e7cfB4769A5",
-    ]
+    ],
 }
