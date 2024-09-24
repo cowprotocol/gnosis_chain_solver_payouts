@@ -1,0 +1,52 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+    tags: [v*]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}
+          labels: |
+            org.opencontainers.image.licenses=MIT OR Apache-2.0
+      - name: Push Project Image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            PREFECT_API_URL=https:${{ secrets.PREFECT_API_URL }}
+            PREFECT_SERVER__TELEMETRY__ENABLED=false
+            PREFECT_SERVER_API_HOST=0.0.0.0
+            SLACK_OAUTH=${{ secrets.SLACK_OAUTH }}
+            SLACK_CHANNEL_ID=${{ secrets.SLACK_CHANNEL_ID }}
+            PROD_DB_URL=${{ secrets.PROD_DB_URL }}
+            BARN_DB_URL=${{ secrets.BARN_DB_URL }}
+      - uses: cowprotocol/autodeploy-action@v2
+        if: ${{ github.ref == 'refs/heads/main' }}
+        with:
+          images: ghcr.io/cowprotocol/gnosis_chain_solver_payouts:main
+          url: ${{ secrets.AUTODEPLOY_URL }}
+          token: ${{ secrets.AUTODEPLOY_TOKEN }}
+          timeout: 600000 # 10 minutes
