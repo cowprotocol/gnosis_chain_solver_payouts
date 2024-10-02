@@ -16,23 +16,11 @@ from src.execute_sql_queries import (
 )
 
 
-def main() -> None:
-    # parsing command-line arguments
-    if len(sys.argv) < 4:
-        print("Wrong usage. Need at least three entries: YEAR MONTH DAY")
-        exit()
-    year = int(sys.argv[1])
-    month = int(sys.argv[2])
-    day = int(sys.argv[3])
-    ignore_gnosis_transfers = False
-    if len(sys.argv) == 5:
-        if sys.argv[4] == "ignore_gnosis_transfers":
-            ignore_gnosis_transfers = True
-            print("Gnosis Solvers transfers will be removed from the final .csv.")
-
+def main(year: int, month: int, day: int, ignore_gnosis_transfers = False) -> str:
     # preprocessing
+    message = str()
     start_block, end_block = get_block_range(year, month, day)
-    print(
+    message += (
         "\nAccounting period from block "
         + str(start_block)
         + " to block "
@@ -48,7 +36,7 @@ def main() -> None:
         barn_end_auction_str,
     ) = get_auction_range(str(start_block), str(end_block))
 
-    print(
+    message += (
         "Production auctions from "
         + prod_start_auction_str
         + " until "
@@ -148,7 +136,7 @@ def main() -> None:
         if final_rewards_per_solver[solver][3] < 0:
             ovedrafts[solver] = round(final_rewards_per_solver[solver][3] / 10**18, 3)
 
-    print("Summary of results (performance, quoting, consistency, total):\n")
+    message += "Summary of results (performance, quoting, consistency, total):\n"
 
     total_xdai_needed = 0
     processed_solver_addresses = {}
@@ -174,33 +162,32 @@ def main() -> None:
             + str(round(final_rewards_per_solver[solver][3] / 10**18, 3))
             + "]."
         )
-    print("\nTotal xDAI needed for the payouts: " + str(total_xdai_needed))
+    message += "\nTotal xDAI needed for the payouts: " + str(total_xdai_needed)
 
     # generate csv with transfers
-    with open(
-        f"./out/transfers-start-{year}-{month}-{day}.csv", "w", newline=""
-    ) as csvfile:
-        csvwriter = csv.writer(csvfile, delimiter=",")
-        csvwriter.writerow(["token_type", "token_address", "receiver", "amount"])
-        for solver in final_rewards_per_solver:
-            if solver in ovedrafts:
-                continue
-            target = processed_solver_addresses[solver][1]
-            if target == GNOSIS_SAFE.lower() and ignore_gnosis_transfers:
-                continue
-            reward = final_rewards_per_solver[solver][3] / 10**18
-            csvwriter.writerow(["native", "", target, reward])
+    csvfile = "token_type, token_address, receiver, amount\n"
+    for solver in final_rewards_per_solver:
+        if solver in ovedrafts:
+            continue
+        target = processed_solver_addresses[solver][1]
+        if target == GNOSIS_SAFE.lower() and ignore_gnosis_transfers:
+            continue
+        reward = final_rewards_per_solver[solver][3] / 10**18
+        csvfile += f"native, {target}, {reward},\n"
 
     if ovedrafts:
-        print()
-        print("Ovedrafts summary.")
+        message += "\n"
+        message += "Ovedrafts summary.\n"
         for solver in ovedrafts:
-            print(
+            message += (
                 "Overdraft for "
                 + processed_solver_addresses[solver][0]
                 + ":\t"
                 + str(ovedrafts[solver])
+                + "\n"
             )
+
+    return csvfile, message
 
 
 if __name__ == "__main__":
