@@ -32,7 +32,7 @@ jobs:
       - uses: cowprotocol/autodeploy-action@v2
         if: ${{ github.ref == 'refs/heads/main' }}
         with:
-          images: ghcr.io/cowprotocol/gnosis_chain_solver_payouts:main
+          images: ghcr.io/cowprotocol/gnosis-chain-solver-payouts:main
           url: ${{ secrets.AUTODEPLOY_URL }}
           token: ${{ secrets.AUTODEPLOY_TOKEN }}
           timeout: 600000 # 10 minutes
