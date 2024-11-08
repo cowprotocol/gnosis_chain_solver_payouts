@@ -20,7 +20,7 @@ from src.execute_sql_queries import (
 
 def main() -> None:
     load_dotenv()
-    gnosis_scan_api = os.environ["GNOSIS_SCAN_API"]
+    gnosis_scan_api_key = os.environ["GNOSIS_SCAN_API_KEY"]
     # parsing command-line arguments
     if len(sys.argv) < 4:
         print("Wrong usage. Need at least three entries: YEAR MONTH DAY")
@@ -35,7 +35,7 @@ def main() -> None:
             print("Gnosis Solvers transfers will be removed from the final .csv.")
 
     # preprocessing
-    start_block, end_block = get_block_range(year, month, day, gnosis_scan_api)
+    start_block, end_block = get_block_range(year, month, day, gnosis_scan_api_key)
     print(
         "\nAccounting period from block "
         + str(start_block)

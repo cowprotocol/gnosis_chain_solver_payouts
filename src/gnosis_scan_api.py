@@ -4,14 +4,14 @@ import calendar
 from src.constants import REQUEST_TIMEOUT, SUCCESS_CODE
 
 
-def get_block_range(year, month, day, gnosis_scan_api):
+def get_block_range(year, month, day, gnosis_scan_api_key):
     date_time = datetime.datetime(year, month, day)
     start_timestamp = int(calendar.timegm(date_time.timetuple()))
     url = (
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
         + str(start_timestamp)
-        + f"&closest=after&apikey={gnosis_scan_api}"
+        + f"&closest=after&apikey={gnosis_scan_api_key}"
     )
     try:
         response = requests.get(
@@ -34,7 +34,7 @@ def get_block_range(year, month, day, gnosis_scan_api):
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
         + str(end_timestamp)
-        + f"&closest=before&apikey={gnosis_scan_api}"
+        + f"&closest=before&apikey={gnosis_scan_api_key}"
     )
     try:
         response = requests.get(
@@ -55,7 +55,7 @@ def get_block_range(year, month, day, gnosis_scan_api):
     return start_block, end_block
 
 
-def fetch_hashes(start_block, end_block, gnosis_scan_api) -> list[str]:
+def fetch_hashes(start_block, end_block, gnosis_scan_api_key) -> list[str]:
 
     res = []
     url = (
@@ -65,7 +65,7 @@ def fetch_hashes(start_block, end_block, gnosis_scan_api) -> list[str]:
         + str(start_block)
         + "&endblock="
         + str(end_block)
-        + f"&sort=desc&apikey={gnosis_scan_api}"
+        + f"&sort=desc&apikey={gnosis_scan_api_key}"
     )
     try:
         response = requests.get(
