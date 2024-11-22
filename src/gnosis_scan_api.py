@@ -1,7 +1,15 @@
-import requests
-import datetime
 import calendar
+import datetime
+import os
+
+import requests
+from dotenv import load_dotenv
+
 from src.constants import REQUEST_TIMEOUT, SUCCESS_CODE
+
+load_dotenv()
+
+GNOSIS_SCAN_API_KEY = os.getenv("GNOSIS_SCAN_API_KEY")
 
 
 def get_block_range(year, month, day):
@@ -11,7 +19,7 @@ def get_block_range(year, month, day):
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
         + str(start_timestamp)
-        + "&closest=after&apikey=YourApiKeyToken"
+        + f"&closest=after&apikey={GNOSIS_SCAN_API_KEY}"
     )
     try:
         response = requests.get(
@@ -34,7 +42,7 @@ def get_block_range(year, month, day):
         "https://api.gnosisscan.io/api?module=block&action=getblocknobytime"
         + "&timestamp="
         + str(end_timestamp)
-        + "&closest=before&apikey=YourApiKeyToken"
+        + f"&closest=before&apikey={GNOSIS_SCAN_API_KEY}"
     )
     try:
         response = requests.get(
@@ -65,7 +73,7 @@ def fetch_hashes(start_block, end_block) -> list[str]:
         + str(start_block)
         + "&endblock="
         + str(end_block)
-        + "&sort=desc&apikey=YourApiKeyToken"
+        + f"&sort=desc&apikey={GNOSIS_SCAN_API_KEY}"
     )
     try:
         response = requests.get(
