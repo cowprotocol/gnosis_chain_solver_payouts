@@ -15,6 +15,7 @@ from src.execute_sql_queries import (
     execute_participation_rewards_helper,
 )
 
+FIT_TO_BUDGET = False
 
 def main() -> None:
     # parsing command-line arguments
@@ -72,17 +73,18 @@ def main() -> None:
             performance_spend += amount
         performance_rewards_per_solver[row["solver"]] = amount
 
-    for solver in performance_rewards_per_solver:
-        if performance_rewards_per_solver[solver] > 0:
-            performance_rewards_per_solver[solver] = (
-                performance_rewards_per_solver[solver]
-                * PERFORMANCE_REWARDS_BUDGET
-                / performance_spend
-            )
-        else:
-            final_consistency_rewards_budget += (-1) * performance_rewards_per_solver[
-                solver
-            ]
+    if FIT_TO_BUDGET:
+        for solver in performance_rewards_per_solver:
+            if performance_rewards_per_solver[solver] > 0:
+                performance_rewards_per_solver[solver] = (
+                    performance_rewards_per_solver[solver]
+                    * PERFORMANCE_REWARDS_BUDGET
+                    / performance_spend
+                )
+            else:
+                final_consistency_rewards_budget += (-1) * performance_rewards_per_solver[
+                    solver
+                ]
 
     # computing quote rewards
     quote_rewards_per_solver = {}
@@ -91,12 +93,13 @@ def main() -> None:
     for index, row in quote_rewards.iterrows():
         number = int(row["num_quotes"])
         total_quotes += number
-        quote_rewards_per_solver[row["solver"]] = number
+        quote_rewards_per_solver[row["solver"]] = number * 10**18
 
-    for solver in quote_rewards_per_solver:
-        quote_rewards_per_solver[solver] = (
-            quote_rewards_per_solver[solver] * QUOTE_REWARDS_BUDGET / total_quotes
-        )
+    if FIT_TO_BUDGET:
+        for solver in quote_rewards_per_solver:
+            quote_rewards_per_solver[solver] = (
+                quote_rewards_per_solver[solver] * QUOTE_REWARDS_BUDGET / total_quotes
+            )
 
     # computing consistency rewards
     participation_data = execute_participation_rewards_helper(
@@ -119,12 +122,16 @@ def main() -> None:
                 participation_per_solver[solver] = token_delta
             total_participation_tokens += token_delta
 
-    for solver in participation_per_solver:
-        participation_per_solver[solver] = (
-            participation_per_solver[solver]
-            * final_consistency_rewards_budget
-            / total_participation_tokens
-        )
+    if FIT_TO_BUDGET:
+        for solver in participation_per_solver:
+            participation_per_solver[solver] = (
+                participation_per_solver[solver]
+                * final_consistency_rewards_budget
+                / total_participation_tokens
+            )
+    else:
+        for solver in participation_per_solver:
+            participation_per_solver[solver] = 0
 
     # putting everything together
     ovedrafts = {}
