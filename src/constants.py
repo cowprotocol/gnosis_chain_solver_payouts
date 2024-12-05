@@ -51,11 +51,11 @@ SOLVER_ADDRESSES = {
     ],
     "0x67be9614C4E0FCdA95AFC66a95B5BDAFb55fa362": [
         "barn-Furucombo",
-        "0x094054C7BD47AfBF6bb0d0439843B3ED2d3387b6",
+        "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
     ],
     "0x227FDA1D5970dF605D785Bf5F2F8899d5fdF8624": [
         "prod-Furucombo",
-        "0x094054C7BD47AfBF6bb0d0439843B3ED2d3387b6",
+        "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
     ],
     "0x53F5378A6f8bb24333aD8D68FD28816504a467b2": [
         "barn-CopiumCapital",
