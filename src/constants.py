@@ -57,6 +57,10 @@ SOLVER_ADDRESSES = {
         "prod-Furucombo",
         "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
     ],
+    "0xbb765c920f86e2a2654c4b82deb5bc2e092ff93b": [
+        "barn-Furucombo",
+        "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
+    ],
     "0x53F5378A6f8bb24333aD8D68FD28816504a467b2": [
         "barn-CopiumCapital",
         "0xf511cAa471f9cB1f60d6BE2CD2a3B19ca9f84679",
