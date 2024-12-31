@@ -42,7 +42,7 @@ order_surplus AS (
         o.buy_token,
         t.sell_amount, -- the total amount the user sends
         t.buy_amount, -- the total amount the user receives
-        oe.surplus_fee as observed_fee, -- the total discrepancy between what the user sends and what they would have send if they traded at clearing price
+        oe.executed_fee as observed_fee, -- the total discrepancy between what the user sends and what they would have send if they traded at clearing price
         o.kind,
         CASE
             WHEN o.kind = 'sell' THEN t.buy_amount - t.sell_amount * o.buy_amount / (o.sell_amount + o.fee_amount)
