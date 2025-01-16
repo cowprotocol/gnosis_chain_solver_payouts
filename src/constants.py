@@ -89,4 +89,8 @@ SOLVER_ADDRESSES = {
         "prod-FractalSolver",
         "0xd4676B4DE3a982A429a8DBE90D4A7e7cfB4769A5",
     ],
+    "0x6bf97afe2d2c790999cded2a8523009eb8a0823f": [
+        "prod-Portus",
+        "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
+    ],
 }
