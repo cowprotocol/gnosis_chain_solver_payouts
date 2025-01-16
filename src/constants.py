@@ -97,4 +97,8 @@ SOLVER_ADDRESSES = {
         "prod-GlueX",
         "0x84dbAE2549d67CaF00f65C355de3D6F4df59A32C",
     ],
+    "0x01B278ab345Fc427B9Efd112928ACd6b7403c298": [
+        "barn-GlueX",
+        "0x84dbAE2549d67CaF00f65C355de3D6F4df59A32C",
+    ],
 }
