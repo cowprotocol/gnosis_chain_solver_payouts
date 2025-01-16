@@ -89,4 +89,16 @@ SOLVER_ADDRESSES = {
         "prod-FractalSolver",
         "0xd4676B4DE3a982A429a8DBE90D4A7e7cfB4769A5",
     ],
+    "0x6bf97afe2d2c790999cded2a8523009eb8a0823f": [
+        "prod-Portus",
+        "0x5F58441bAf077afC6c5f17c6D54f25077D637ada",
+    ],
+    "0x490f34c46cf271b288d1833571f5d47b7e068163": [
+        "prod-GlueX",
+        "0x84dbAE2549d67CaF00f65C355de3D6F4df59A32C",
+    ],
+    "0x01B278ab345Fc427B9Efd112928ACd6b7403c298": [
+        "barn-GlueX",
+        "0x84dbAE2549d67CaF00f65C355de3D6F4df59A32C",
+    ],
 }
