@@ -101,4 +101,12 @@ SOLVER_ADDRESSES = {
         "barn-GlueX",
         "0x84dbAE2549d67CaF00f65C355de3D6F4df59A32C",
     ],
+    "0x911d92d6c905b1dff68a6de64b9058c941bec6a1": [
+        "barn-ApeOut1inch",
+        "0x4D1Cd5A87C39824d12dc447D4D30F3e024881f59",
+    ],
+    "0xe8b92bcd54dab0c833bd9ebecd6770baae075863": [
+        "prod-ApeOut1inch",
+        "0x4D1Cd5A87C39824d12dc447D4D30F3e024881f59",
+    ],
 }
