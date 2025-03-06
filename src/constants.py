@@ -109,4 +109,12 @@ SOLVER_ADDRESSES = {
         "prod-ApeOut1inch",
         "0x4D1Cd5A87C39824d12dc447D4D30F3e024881f59",
     ],
+    "0x606ce11e72bc77363ce0dc74a2ed2b4244968143": [
+        "prod-Laita",
+        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd"
+    ],
+    "0xB073F89C5BFDdD973b42A5629ab96891fAD74118": [
+        "barn-Laita",
+        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd"
+    ],
 }
