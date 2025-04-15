@@ -35,3 +35,10 @@ There is also an optional argument that can be passed, which removes the transfe
 python -m src.main_script 2024 4 9 ignore_gnosis_transfers
 ```
 
+
+The script can also be run by building and running the Dockerfile:
+
+```
+docker build -t payoutsscript .
+docker run --rm -v $(pwd)/out:/app/out payoutsscript 2025 4 8 ignore_gnosis_transfers
+```
