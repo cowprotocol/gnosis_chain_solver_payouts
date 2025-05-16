@@ -33,6 +33,8 @@ SOLVER_ADDRESSES = {
     "0x027aF765554bD4F768415e299EE610C90e9bED55": ["barn-Quasimodo", GNOSIS_SAFE],
     "0xC088aea818dE69CeC696054682098ABa804b4FC9": ["barn-1inch", GNOSIS_SAFE],
     "0x4930a9012e8677ae764e44f2b46af8087a1f9f8e": ["barn-Balancer", GNOSIS_SAFE],
+    "0x638d7114ced5e17be1a935ec80b20a0a4109360c": ["prod-ExtQuasimodo", GNOSIS_SAFE],
+    "0xf2090280361cc0571c2817ca7f9f3c628d2be180": ["barn-ExtQuasimodo", GNOSIS_SAFE],
     "0x8e600b399Da9c46255ccac98764987cF81837a66": [
         "barn-Enso",
         "0x826e0BB2276271eFdF2a500597f37b94f6c153bA",
@@ -111,10 +113,18 @@ SOLVER_ADDRESSES = {
     ],
     "0x606ce11e72bc77363ce0dc74a2ed2b4244968143": [
         "prod-Laita",
-        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd"
+        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd",
     ],
     "0xB073F89C5BFDdD973b42A5629ab96891fAD74118": [
         "barn-Laita",
-        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd"
+        "0x08bd22f5b9397eb9e6787d33949c39e825cab5dd",
+    ],
+    "0x4799d639954bf7a2c420c20a72ebd7caf900bfc4": [
+        "prod-Wraxyn",
+        "0xb98addcf799a8d7473020b41714c688af8107c3e",
+    ],
+    "0x700f0d287c8471057b7856ac7099343854a06b1d": [
+        "barn-Wraxyn",
+        "0xb98addcf799a8d7473020b41714c688af8107c3e",
     ],
 }
